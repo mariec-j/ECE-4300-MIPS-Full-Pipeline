@@ -1,13 +1,138 @@
 `timescale 1ns / 1ps
 
 module MIPS_Pipeline (
-    
-    
-    input clk, rst
+input clk,
+input rst    
+);
+//take the outputs from the top files 
 
+//InstructionDecode.v
+wire[1:0] InstructionDecode_WB;
+wire[2:0] InstructionDecode_M;
+wire[1:0] InstructionDecode_ALUOp;
+wire InstructionDecode_ALUSrc;
+wire InstructionDecode_RegDst;
+wire InstructionDecode_NPC;
+wire[31:0] InstructionDecode_ReadData1;
+wire[31:0] InstructionDecode_ReadData2;
+wire[31:0] InstructionDecode_SignExtend;
+wire [4:0] InstructionDecode_Instr_2016;
+wire[4:0] InstructionDecode_Instr_1511;
+    
+//Instruction_Execute.v
+wire [1:0]    IE_WB;
+wire[2:0]    IE_Mem;
+wire[31:0]   Add_Result;
+wire          Zero;
+wire[31:0]   ALU_Result;
+wire[31:0]   ReadData2_ex_mem;
+wire[4:0]    muxOut_5bit    ;
 
-    );
-    
-    
+//Fetch.v
+wire [31:0] if_id_instr, if_id_npc;
+
+//Instruction_Mem_Wb.v
+wire RegWrite;
+wire MemtoReg;
+wire [31:0] ReadData;
+wire [31:0] Mem_ALU_Result;
+wire [4:0] MemWriteReg;
+wire PCSrc;
+
+//Instruction_WB.v
+wire [31:0] WriteData;
+
+//Stuff
+//DONE
+InstructionDecode u_InstructionDecode(
+    .clk                          	(clk                           ),
+    .rst                          	(rst                           ),
+    .RegWrite                     	(RegWrite                      ),
+
+    .IFID_instruction             	(if_id_instr              ),//fetch.v
+    .IFID_NPC                     	(if_id_npc                      ),//fetch.v
+    .MemWBLatch_WriteReg          	(MemWriteReg               ),//instruction_Mem_Wb.v
+    .WBMux_WriteData              	(WriteData               ),//instruction_Mem_Wb.v
+
+    //
+    .InstructionDecode_WB         	(InstructionDecode_WB          ),
+    .InstructionDecode_M          	(InstructionDecode_M           ),
+    .InstructionDecode_ALUOp      	(InstructionDecode_ALUOp       ),
+    .InstructionDecode_ALUSrc     	(InstructionDecode_ALUSrc      ),
+    .InstructionDecode_RegDst     	(InstructionDecode_RegDst      ),
+    .InstructionDecode_NPC        	(InstructionDecode_NPC         ),
+    .InstructionDecode_ReadData1  	(InstructionDecode_ReadData1   ),
+    .InstructionDecode_ReadData2  	(InstructionDecode_ReadData2   ),
+    .InstructionDecode_SignExtend 	(InstructionDecode_SignExtend  ),
+    .InstructionDecode_Instr_2016 	(InstructionDecode_Instr_2016  ),
+    .InstructionDecode_Instr_1511 	(InstructionDecode_Instr_1511  )
+);
+
+//DONE
+//input from Instruction Decode
+Instruction_Execute u_Instruction_Execute(
+    .NPC              	(InstructionDecode_NPC               ),
+    .ReadData1        	(InstructionDecode_ReadData1         ),
+    .ReadData2        	(InstructionDecode_ReadData2         ),
+    .ALU_Src          	(InstructionDecode_ALUSrc           ),
+    .SignExtend       	(InstructionDecode_SignExtend        ),
+    .ALU_Op           	(InstructionDecode_ALUOp            ),
+    .Instr_2016       	(InstructionDecode_Instr_2016        ),
+    .Instr_1511       	(InstructionDecode_Instr_1511        ),
+    .RegDst           	(InstructionDecode_RegDst            ),
+    .WB               	(InstructionDecode_WB                ),
+    .Mem              	(InstructionDecode_M               ),
+
+    .clk              	(clk               ),
+    .rst              	(rst               ),
+    .IE_WB            	(IE_WB             ),
+    .IE_Mem           	(IE_Mem            ),
+    .Add_Result       	(Add_Result        ),
+    .Zero             	(Zero              ),
+    .ALU_Result       	(ALU_Result        ),
+    .ReadData2_ex_mem 	(ReadData2_ex_mem  ),
+    .muxOut_5bit      	(muxOut_5bit       )
+);
+
+//DONE
+instrFetch u_instrFetch(
+    .clk           	(clk            ),
+    .rst           	(rst            ),
+
+    .ex_mem_pc_src 	(PCSrc  ),//input from Instruction_Mem_Wb.v
+    .ex_mem_npc    	(Add_Result     ),//input from Instruction_Execute.v
+
+    .if_id_instr   	(if_id_instr    ),
+    .if_id_npc     	(if_id_npc      )
+);
+
+//DONE
+Instruction_Mem u_Instruction_Mem(
+    //input is from instruction_Execute.v
+    .WB               	(IE_WB                ),
+    .M_ctlout         	(IE_Mem [2]         ),
+    .Zero             	(Zero              ),
+    .MemWrite         	(IE_Mem [0]          ),
+    .ALU_Result       	(ALU_Result        ),
+    .ReadData2_ex_mem 	(ReadData2_ex_mem  ),
+    .MemRead          	(IE_Mem [1]           ),
+    .muxOut_5bit      	(muxOut_5bit       ),
+
+    .clk              	(clk               ),
+    .rst              	(rst               ),
+    .RegWrite         	(RegWrite          ),
+    .MemtoReg         	(MemtoReg          ),
+    .ReadData         	(ReadData          ),
+    .Mem_ALU_Result   	(Mem_ALU_Result    ),
+    .MemWriteReg      	(MemWriteReg       ),
+    .PCSrc            	(PCSrc             )
+);
+
+Instr_WB u_Instr_WB(
+    .MemtoReg      (MemtoReg),
+    .ReadData      (ReadData),
+    .Mem_ALU_Result(Mem_ALU_Result),
+    .WriteData     (WriteData)
+);
     
 endmodule
