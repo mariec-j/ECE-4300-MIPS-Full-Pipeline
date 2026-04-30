@@ -18,7 +18,7 @@ module Data_Mem(
     output reg [31:0] DataMem_ReadData
     );
 
-reg [31:0] DMEM [0:1024];
+reg [31:0] DMEM [0:128];
 integer i;
 
 initial begin
