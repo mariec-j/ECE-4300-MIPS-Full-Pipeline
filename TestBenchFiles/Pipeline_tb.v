@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+
 module Pipeline_tb();
 
     reg clk;
@@ -21,5 +22,8 @@ module Pipeline_tb();
         #500 $finish;
     end
     
-    
+    initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(0, Pipeline_tb);
+end
 endmodule
