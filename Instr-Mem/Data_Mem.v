@@ -18,7 +18,7 @@ module Data_Mem(
     output reg [31:0] DataMem_ReadData
     );
 
-reg [31:0] DMEM [0:128];
+reg [31:0] DMEM [0:64];
 integer i;
 
 initial begin
@@ -34,7 +34,7 @@ always @(posedge clk or negedge rst) begin
     else begin
         if (MemRead)
             DataMem_ReadData <= DMEM[Addr]; // ReadData reads DMEM
-        if(MemWrite)
+        if (MemWrite)
             DMEM[Addr] <= WriteData; // put readdat2 to DMEM[ALU_Result]
     end
 end

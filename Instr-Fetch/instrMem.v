@@ -15,15 +15,15 @@ initial begin
             $display("\tmem[%0d] = %0b", i, mem[i]); 
 end
 
-//reg [31:0] tempDat;
+reg [31:0] tempDat;
 
-//always @(posedge clk or negedge rst) begin
-//    if(!rst) tempDat <= 32'h00000000;
-//    else tempDat <= mem[addr];
-//end
+always @(posedge clk or negedge rst) begin
+    if(!rst) tempDat <= 32'h00000000;
+    else tempDat <= mem[addr];
+end
 
-//assign data = tempDat;
+assign data = tempDat;
 
-assign data = mem[addr];
+//assign data = mem[addr];
 
 endmodule

@@ -23,7 +23,7 @@ wire[4:0] InstructionDecode_Instr_1511;
     
 //Instruction_Execute.v wires
 wire [1:0]    IE_WB;
-wire[2:0]    IE_Mem;
+wire [2:0]    IE_Mem;
 wire[31:0]   Add_Result;
 wire          Zero;
 wire[31:0]   ALU_Result;
@@ -107,12 +107,12 @@ Instruction_Execute u_Instruction_Execute(
 Instruction_Mem u_Instruction_Mem(
 // Inputs - - - - - - - - - - - - -
     .WB               	(IE_WB             ),
-    .M_ctlout         	(IE_Mem [0]        ),
+    .M_ctlout         	(IE_Mem[2]         ),
     .Zero             	(Zero              ),
-    .MemWrite         	(IE_Mem [1]        ),
+    .MemWrite         	(IE_Mem[0]         ),
     .ALU_Result       	(ALU_Result        ),
     .ReadData2_ex_mem 	(ReadData2_ex_mem  ),
-    .MemRead          	(IE_Mem [2]        ),
+    .MemRead          	(IE_Mem[1]         ),
     .muxOut_5bit      	(muxOut_5bit       ),
     .clk              	(clk               ),
     .rst              	(rst               ),
