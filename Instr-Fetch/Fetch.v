@@ -18,13 +18,6 @@ incrementer inc0(
     .PC_out(incr_outp)
 );
 
-mux m0(
-    .a_true(ex_mem_npc),
-    .b_false(incr_outp),
-    .y(mux_outp),
-    .sel(ex_mem_pc_src)
-);
-
 mux #(.WIDTH_inp(32)) m0_fetch(
     .sel(ex_mem_pc_src),
     .in_1(incr_outp),
