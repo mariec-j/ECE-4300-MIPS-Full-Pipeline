@@ -12,7 +12,7 @@ module InstructionDecode(
     output [1:0] InstructionDecode_ALUOp,
     output InstructionDecode_ALUSrc,
     output InstructionDecode_RegDst,
-    output InstructionDecode_NPC,
+    output [31:0] InstructionDecode_NPC,
     output [31:0] InstructionDecode_ReadData1,
     output [31:0] InstructionDecode_ReadData2,
     output [31:0] InstructionDecode_SignExtend,

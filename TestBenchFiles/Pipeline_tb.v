@@ -11,16 +11,14 @@ module Pipeline_tb();
 
     initial begin
         clk = 0;
-        $readmemb("data.txt", uut.u_InstructionDecode.rf0.gen_purpose_reg);
-        $readmemb("instr.mem", uut.u_instrFetch.instrMem0.mem);
         forever #5 clk = ~clk; // 10ns clock period
     end
 
     initial begin
-        rst = 1;
-        #10 rst = 0;
+        rst = 0;
+        #10 rst = 1;
 
-        #1000 $finish;
+        #300 $finish;
     end
     
     

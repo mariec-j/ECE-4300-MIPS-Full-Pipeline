@@ -5,6 +5,6 @@ module SignExtend(
     output [31:0] signExtOut
 );
   
-    assign signExtOut = {16'h0,signExtIn};
+    assign signExtOut = {{16{signExtIn[15]}}, signExtIn};
     
 endmodule

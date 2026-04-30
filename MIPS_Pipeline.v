@@ -14,7 +14,7 @@ wire[2:0] InstructionDecode_M;
 wire[1:0] InstructionDecode_ALUOp;
 wire InstructionDecode_ALUSrc;
 wire InstructionDecode_RegDst;
-wire InstructionDecode_NPC;
+wire[31:0] InstructionDecode_NPC;
 wire[31:0] InstructionDecode_ReadData1;
 wire[31:0] InstructionDecode_ReadData2;
 wire[31:0] InstructionDecode_SignExtend;
@@ -105,18 +105,18 @@ Instruction_Execute u_Instruction_Execute(
 
 //  - - - - - - Instruction Memory
 Instruction_Mem u_Instruction_Mem(
-    //input is from instruction_Execute.v
+// Inputs - - - - - - - - - - - - -
     .WB               	(IE_WB             ),
-    .M_ctlout         	(IE_Mem [2]        ),
+    .M_ctlout         	(IE_Mem [0]        ),
     .Zero             	(Zero              ),
-    .MemWrite         	(IE_Mem [0]        ),
+    .MemWrite         	(IE_Mem [1]        ),
     .ALU_Result       	(ALU_Result        ),
     .ReadData2_ex_mem 	(ReadData2_ex_mem  ),
-    .MemRead          	(IE_Mem [1]        ),
+    .MemRead          	(IE_Mem [2]        ),
     .muxOut_5bit      	(muxOut_5bit       ),
-
     .clk              	(clk               ),
     .rst              	(rst               ),
+// Outputs - - - - - - - - - - - - -
     .RegWrite         	(RegWrite          ),
     .MemtoReg         	(MemtoReg          ),
     .ReadData         	(ReadData          ),

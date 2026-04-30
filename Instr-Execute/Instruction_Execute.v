@@ -38,7 +38,7 @@ wire ALU_Zero_out;
 //Adder
 adder adder01 (
     .inp_1(NPC),
-    .inp_2(SignExtend),
+    .inp_2(SignExtend << 2),
     .Add_Result(adder_32_out)
 );
 

@@ -4,7 +4,7 @@ module incrementer(
     input [31:0] PC_in,
     output [31:0] PC_out
     );
-// Add + 4 to PC_in and output it
-assign PC_out = PC_in + 3'b100;
+// Add + 1 to PC_in and output it
+assign PC_out = PC_in + 3'b001;
     
 endmodule

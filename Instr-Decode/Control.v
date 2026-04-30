@@ -33,17 +33,26 @@ always@(*) begin
         end
 
         6'b101011: begin // sw
+            RegDst       = 1'bX;
             ALUSrc       = 1;
-            control_WB   = 2'b00;
+            control_WB   = 2'b00; // RegWrite = 0, MemtoReg = 0
             control_M    = 3'b001; // MemWrite=1
             control_ALUOp = 2'b00;
         end
 
         6'b000100: begin // beq
+            RegDst       = 1'bX;
             ALUSrc       = 0;
             control_WB   = 2'b00;
             control_M    = 3'b100; // Branch=1
             control_ALUOp = 2'b01;
+        end
+        default: begin
+            RegDst       = 0;
+            ALUSrc       = 0;
+            control_WB   = 2'b00; // RegWrite=1, MemtoReg=0
+            control_M    = 3'b000;
+            control_ALUOp = 2'b00;
         end
 
     endcase
