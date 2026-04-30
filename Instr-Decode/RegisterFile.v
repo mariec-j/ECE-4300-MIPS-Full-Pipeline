@@ -15,16 +15,16 @@ module RegisterFile(
 reg [31:0] gen_purpose_reg [31:0]; // the general purpose registers of width 32 bits depth 32
 initial begin
 gen_purpose_reg[0] = 32'h00000000;
-gen_purpose_reg[1] = 32'h00000001;
-gen_purpose_reg[2] = 32'h00000002;
-gen_purpose_reg[3] = 32'h00000003;
-gen_purpose_reg[4] = 32'h00000004;
-gen_purpose_reg[5] = 32'h00000005;
-gen_purpose_reg[6] = 32'h00000006;
-gen_purpose_reg[7] = 32'h00000007;
-gen_purpose_reg[8] = 32'h00000008;
-gen_purpose_reg[9] = 32'h00000009;
-gen_purpose_reg[10] = 32'h0000000a;
+gen_purpose_reg[1] = 32'h00000000;
+gen_purpose_reg[2] = 32'h00000000;
+gen_purpose_reg[3] = 32'h00000000;
+gen_purpose_reg[4] = 32'h00000000;
+gen_purpose_reg[5] = 32'h00000000;
+gen_purpose_reg[6] = 32'h00000000;
+gen_purpose_reg[7] = 32'h00000000;
+gen_purpose_reg[8] = 32'h00000000;
+gen_purpose_reg[9] = 32'h00000000;
+gen_purpose_reg[10] = 32'h00000000;
 end
 
 always @(posedge clk or negedge rst) begin
