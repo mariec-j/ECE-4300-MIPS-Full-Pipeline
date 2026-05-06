@@ -33,6 +33,8 @@ wire [31:0] ALU_out; // 32 bit output of alue
 wire [2:0] ALU_control_out;//output of ALU control
 wire [4:0] mux_5_out;//output of second mux
 wire ALU_Zero_out;
+wire [1:0] ForwardA;
+wire [1:0] ForwardB;
 
 
 //Adder
@@ -97,5 +99,16 @@ EX_Mem_Latch EX_M_Latch (
     .EX_Mem_Latch_muxOut_5bit(muxOut_5bit)
 );
 
+//Forwarding.v 
 
+Forwarding u_Forwarding(
+    .ID_EX_Rs          (Rs              ),
+    .ID_EX_Rt          (Instr_2016      ),
+    .EX_MEM_RegisterRd (EX_MEM_Rd       ),
+    .MEM_WB_RegisterRd (MEM_WB_Rd       ),
+    .EX_MEM_RegWrite   (EX_MEM_RegWrite ),
+    .MEM_WB_RegWrite   (MEM_WB_RegWrite ),
+    .ForwardA          (ForwardA        ),
+    .ForwardB          (ForwardB        )
+);
 endmodule
