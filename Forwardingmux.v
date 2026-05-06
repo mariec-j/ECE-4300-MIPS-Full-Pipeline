@@ -1,5 +1,5 @@
 //Basic mux
-module Forwardingmux #(parameters WIDTH_inp_forward =  32) (
+module Forwardingmux #(parameter WIDTH_inp_forward =  32) (
 
     input [1:0] sel_forward,
     input [(WIDTH_inp-1):0] in_1_forward,
