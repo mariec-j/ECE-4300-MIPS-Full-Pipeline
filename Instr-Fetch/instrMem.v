@@ -10,9 +10,7 @@ module instrMem(
 reg [31:0] mem [0:39];
 integer i;
 initial begin
-    $readmemb("instr.mem", mem);
-        for(i = 0; i < 25; i = i + 1)
-            $display("\tmem[%0d] = %0b", i, mem[i]); 
+    for(i = 0; i < 32; i = i+1) mem[i] = 0;  
 end
 
 reg [31:0] tempDat;

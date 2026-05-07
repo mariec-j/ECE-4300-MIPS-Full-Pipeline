@@ -9,7 +9,21 @@ module Pipeline_tb();
         .clk(clk),
         .rst(rst)
     );
+    
+    integer i;
 
+    initial begin
+        $readmemb("data.txt", uut.u_Instruction_Mem.datamem01.DMEM);
+        for(i = 0; i < 8; i = i + 1)
+        $display("\tDMEM[%0d] = %0b", i, uut.u_Instruction_Mem.datamem01.DMEM[i]);
+    end
+    
+    initial begin
+        $readmemb("instr.mem", uut.u_instrFetch.instrMem0.mem);
+            for(i = 0; i < 25; i = i + 1)
+                $display("\tmem[%0d] = %0b", i, uut.u_instrFetch.instrMem0.mem[i]); 
+    end
+    
     initial begin
         clk = 0;
         forever #5 clk = ~clk; // 10ns clock period

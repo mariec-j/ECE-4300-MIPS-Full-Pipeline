@@ -31,7 +31,9 @@ input [31:0]    MEM_WB_value,
     output          Zero,
     output [31:0]   ALU_Result,
     output [31:0]   ReadData2_ex_mem,
-    output [4:0]    muxOut_5bit
+    output [4:0]    muxOut_5bit,
+    output          EX_Mem_Latch_RegWrite
+ 
     );
 
 //internal wires the 5 outputs of aadder, ALU, MUX, ALUcontrol, Mux2
@@ -88,14 +90,14 @@ mux #(.WIDTH_inp(5)) mux_5bit (
 );
 
 //Latch
-EX_Mem_Latch EX_M_Latch (
+EX_Mem_Latch_Forwarded EX_M_Latch (
 // - - - - - - inputs - - - - - -
     .WB(WB),
     .Mem(Mem),
     .Add_Result(adder_32_out), 
     .Zero(ALU_Zero_out),
     .ALU_Result(ALU_out),
-    .ReadData2_ex_mem(ReadData2),
+    .ReadData2_ex_mem(muxB_out),
     .muxOut_5bit(mux_5_out),
     .clk(clk),
     .rst(rst),
@@ -107,7 +109,8 @@ EX_Mem_Latch EX_M_Latch (
     .EX_Mem_Latch_Zero(Zero),
     .EX_Mem_Latch_ALU_Result(ALU_Result),
     .EX_Mem_Latch_ReadData2_ex_mem(ReadData2_ex_mem),
-    .EX_Mem_Latch_muxOut_5bit(muxOut_5bit)
+    .EX_Mem_Latch_muxOut_5bit(muxOut_5bit),
+    .EX_Mem_Latch_RegWrite(EX_Mem_Latch_RegWrite)
 );
 
 //Forwarding.v 

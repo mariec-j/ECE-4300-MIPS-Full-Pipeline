@@ -23,7 +23,7 @@ integer i;
 
 initial begin
     DataMem_ReadData <= 0;
-    $readmemb("data.txt",DMEM);
+    $readmemb("data - Copy.txt",DMEM);
     for(i = 0; i < 8; i = i + 1)
     $display("\tDMEM[%0d] = %0b", i, DMEM[i]);
 end

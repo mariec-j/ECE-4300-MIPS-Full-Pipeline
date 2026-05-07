@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module MIPS_Pipeline_Fowarded (
+module MIPS_Pipeline_Forwarded (
 input clk,
 input rst    
 ); 
@@ -58,6 +58,9 @@ instrFetch u_instrFetch(
     .if_id_instr   	(if_id_instr    ),
     .if_id_npc     	(if_id_npc      )
 );
+reg [4:0] Rs;
+
+always @(posedge clk) Rs <= if_id_instr[25:21];
 
 // - - - - - - Instruction Decode
 InstructionDecode u_InstructionDecode(
@@ -83,8 +86,10 @@ InstructionDecode u_InstructionDecode(
     .InstructionDecode_Instr_1511 	(InstructionDecode_Instr_1511  )
 );
 
+wire EX_MEM_RegWrite = IE_WB[1];
+
 //  - - - - - - Instruction Execution
-Instruction_Execute u_Instruction_Execute(
+Instruction_Execute_Forwarded u_Instruction_Execute(
 // Inputs - - - - - - - - - - - - -
     .NPC              	(InstructionDecode_NPC               ),
     .ReadData1        	(InstructionDecode_ReadData1         ),
@@ -97,6 +102,13 @@ Instruction_Execute u_Instruction_Execute(
     .RegDst           	(InstructionDecode_RegDst            ),
     .WB               	(InstructionDecode_WB                ),
     .Mem              	(InstructionDecode_M                 ),
+    .Rs                 (Rs                                 ), // rs from decode
+    .EX_MEM_Rd          (muxOut_5bit                        ), // Rd in MEM stage
+    .MEM_WB_Rd          (M_MemWriteReg                      ), // Rd in WB stage
+    .EX_MEM_RegWrite    (EX_MEM_RegWrite                    ), // RegWrite from EX/MEM latch
+    .MEM_WB_RegWrite    (RegWrite                           ), // RegWrite from MEM/WB latch
+    .EX_MEM_value       (ALU_Result                         ), // ALU result in MEM stage
+    .MEM_WB_value       (WriteData                          ), // write data in WB stage
     .clk              	(clk               ),
     .rst              	(rst               ),
 // Outputs - - - - - - - - - - - - -
