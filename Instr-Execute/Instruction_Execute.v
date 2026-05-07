@@ -120,9 +120,6 @@ Forwarding u_Forwarding(
     .ForwardA          (ForwardA        ),
     .ForwardB          (ForwardB        )
 );
-
-endmodule
-
 Forwardingmux #(.WIDTH_inp_forward(32)) muxA (
     .sel_forward  (ForwardA),
     .in_1_forward (ReadData1),
@@ -138,3 +135,4 @@ Forwardingmux #(.WIDTH_inp_forward(32)) muxB (
     .in_3_forward (EX_MEM_value),
     .outp_forward (muxB_out)
 );
+endmodule

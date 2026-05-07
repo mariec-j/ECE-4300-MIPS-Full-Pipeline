@@ -23,8 +23,7 @@ module EX_Mem_Latch(
     ///////////NEW for forwarding
     output reg EX_Mem_Latch_RegWrite
     );
-wire [31:0] muxA_out;
-wire [31:0] muxB_out;
+
     always @(posedge clk or negedge rst)begin
         if(!rst)begin
             //outputs
