@@ -23,7 +23,6 @@ module EX_Mem_Latch(
     );
 
     always @(posedge clk or negedge rst)begin
-        #1
         if(!rst)begin
             //outputs
             EX_Mem_Latch_WB <= 2'b0;

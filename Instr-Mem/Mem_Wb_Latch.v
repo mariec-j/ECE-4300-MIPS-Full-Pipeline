@@ -16,7 +16,6 @@ module Mem_Wb_Latch(
     );
     
 always @(posedge clk or negedge rst)begin
-    #1
     if(!rst)begin
         Mem_Wb_Latch_RegWrite <= 0;
         Mem_Wb_Latch_MemtoReg <= 0;
