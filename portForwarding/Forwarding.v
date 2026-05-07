@@ -34,3 +34,4 @@ always @(*) begin
     else
         ForwardB = 2'b00;
 end
+endmodule
