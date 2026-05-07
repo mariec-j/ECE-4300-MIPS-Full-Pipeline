@@ -44,6 +44,8 @@ wire ALU_Zero_out;
 /////////////////////////////////////////////////////
 wire [1:0] ForwardA;
 wire [1:0] ForwardB;
+wire [31:0] muxA_out;  
+wire [31:0] muxB_out;
 
 
 //Adder
