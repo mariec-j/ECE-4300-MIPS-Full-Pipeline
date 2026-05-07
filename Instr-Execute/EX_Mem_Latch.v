@@ -19,7 +19,9 @@ module EX_Mem_Latch(
     output reg          EX_Mem_Latch_Zero,
     output reg [31:0]   EX_Mem_Latch_ALU_Result,
     output reg [31:0]   EX_Mem_Latch_ReadData2_ex_mem,
-    output reg [4:0]    EX_Mem_Latch_muxOut_5bit
+    output reg [4:0]    EX_Mem_Latch_muxOut_5bit,
+    ///////////NEW for forwarding
+    output reg EX_Mem_Latch_RegWrite
     );
 
     always @(posedge clk or negedge rst)begin
@@ -32,6 +34,7 @@ module EX_Mem_Latch(
             EX_Mem_Latch_ALU_Result <= 32'b0;
             EX_Mem_Latch_ReadData2_ex_mem <= 32'b0;
             EX_Mem_Latch_muxOut_5bit <= 5'b0;
+            EX_Mem_Latch_RegWrite <= 1'b0;  
     
         end
 
@@ -44,6 +47,7 @@ module EX_Mem_Latch(
             EX_Mem_Latch_ALU_Result <= ALU_Result;
             EX_Mem_Latch_ReadData2_ex_mem <= ReadData2_ex_mem;
             EX_Mem_Latch_muxOut_5bit <= muxOut_5bit;
+            EX_Mem_Latch_RegWrite <= WB[1];
 
         end 
     end 
