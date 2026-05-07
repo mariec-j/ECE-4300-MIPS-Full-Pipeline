@@ -9,15 +9,15 @@ module Instruction_Mem(
     input [31:0] ALU_Result,
     input [31:0] ReadData2_ex_mem,
     input MemRead,
-    input [4:0] muxOut_5bit,
+    input [4:0] M_muxOut_5bit,
     input clk,
     input rst,
 // - - - - - - Outputs - - - - - -
-    output RegWrite,
+    output M_RegWrite,
     output MemtoReg,
     output [31:0] ReadData,
     output [31:0] Mem_ALU_Result,
-    output [4:0] MemWriteReg,
+    output [4:0] M_MemWriteReg,
     output PCSrc
     );
     
@@ -46,13 +46,13 @@ Mem_Wb_Latch M_W_Latch(
     .ALU_Result(ALU_Result),
     .ReadData(Mem_ReadData_out),
     .clk(clk), .rst(rst),
-    .muxOut_5bit(muxOut_5bit),
+    .muxOut_5bit(M_muxOut_5bit),
 // - - - - - - Outputs - - - - - -
-    .Mem_Wb_Latch_RegWrite(RegWrite),
+    .Mem_Wb_Latch_RegWrite(M_RegWrite),
     .Mem_Wb_Latch_MemtoReg(MemtoReg),
     .Mem_Wb_Latch_ReadData(ReadData),
     .Mem_Wb_Latch_Mem_ALU_Result(Mem_ALU_Result),
-    .Mem_Wb_Latch_MemWriteReg(MemWriteReg)
+    .Mem_Wb_Latch_MemWriteReg(M_MemWriteReg)
     );
     
 endmodule

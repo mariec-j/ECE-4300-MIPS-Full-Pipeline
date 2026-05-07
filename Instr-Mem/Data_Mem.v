@@ -28,15 +28,13 @@ initial begin
     $display("\tDMEM[%0d] = %0b", i, DMEM[i]);
 end
 
-always @(posedge clk or negedge rst) begin
-    if(!rst)
-        DataMem_ReadData <= 0; // ReadData is null/0
-    else begin
-        if (MemRead)
-            DataMem_ReadData <= DMEM[Addr]; // ReadData reads DMEM
-        if (MemWrite)
-            DMEM[Addr] <= WriteData; // put readdat2 to DMEM[ALU_Result]
-    end
+always @(*) begin
+    if (MemRead)                        // load
+        DataMem_ReadData <= DMEM[Addr]; // ReadData reads DMEM
+    if (MemWrite)                       // store
+        DMEM[Addr] <= WriteData; // put readdat2 to DMEM[ALU_Result]
 end
+
+//assign DataMem_ReadData = (MemRead)? DMEM[Addr] : 0;
 
 endmodule

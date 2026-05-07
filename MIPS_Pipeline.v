@@ -9,34 +9,40 @@ input rst
 wire [31:0] if_id_instr, if_id_npc;
 
 //InstructionDecode.v wires
-wire[1:0] InstructionDecode_WB;
-wire[2:0] InstructionDecode_M;
-wire[1:0] InstructionDecode_ALUOp;
-wire InstructionDecode_ALUSrc;
-wire InstructionDecode_RegDst;
-wire[31:0] InstructionDecode_NPC;
-wire[31:0] InstructionDecode_ReadData1;
-wire[31:0] InstructionDecode_ReadData2;
-wire[31:0] InstructionDecode_SignExtend;
-wire [4:0] InstructionDecode_Instr_2016;
-wire[4:0] InstructionDecode_Instr_1511;
+wire [1:0]  InstructionDecode_WB;
+wire [2:0]  InstructionDecode_M;
+wire [1:0]  InstructionDecode_ALUOp;
+wire        InstructionDecode_ALUSrc;
+wire        InstructionDecode_RegDst;
+wire [31:0] InstructionDecode_NPC;
+wire [31:0] InstructionDecode_ReadData1;
+wire [31:0] InstructionDecode_ReadData2;
+wire [31:0] InstructionDecode_SignExtend;
+wire [4:0]  InstructionDecode_Instr_2016;
+wire [4:0]  InstructionDecode_Instr_1511;
     
 //Instruction_Execute.v wires
 wire [1:0]    IE_WB;
 wire [2:0]    IE_Mem;
-wire[31:0]   Add_Result;
+wire [31:0]   Add_Result;
 wire          Zero;
-wire[31:0]   ALU_Result;
-wire[31:0]   ReadData2_ex_mem;
-wire[4:0]    muxOut_5bit    ;
+wire [31:0]   ALU_Result;
+wire [31:0]   ReadData2_ex_mem;
+wire [4:0]    muxOut_5bit;
+
+wire        w_Branch;
+wire        w_MemRead;
+wire        w_MemWrite;
 
 //Instruction_Mem_Wb.v wires
-wire RegWrite;
-wire MemtoReg;
+wire        RegWrite;
+wire        MemtoReg;
 wire [31:0] ReadData;
 wire [31:0] Mem_ALU_Result;
-wire [4:0] MemWriteReg;
-wire PCSrc;
+wire [4:0]  MemWriteReg;
+wire        PCSrc;
+wire        M_RegWrite;
+wire [4:0]  M_MemWriteReg;
 
 //Instruction_WB.v wires
 wire [31:0] WriteData;
@@ -103,34 +109,42 @@ Instruction_Execute u_Instruction_Execute(
     .muxOut_5bit      	(muxOut_5bit       )
 );
 
+assign w_Branch   = IE_Mem[2];
+assign w_MemRead  = IE_Mem[1];
+assign w_MemWrite = IE_Mem[0];
+
 //  - - - - - - Instruction Memory
 Instruction_Mem u_Instruction_Mem(
 // Inputs - - - - - - - - - - - - -
     .WB               	(IE_WB             ),
-    .M_ctlout         	(IE_Mem[2]         ),
+    .M_ctlout         	(w_Branch          ),
     .Zero             	(Zero              ),
-    .MemWrite         	(IE_Mem[0]         ),
+    .MemWrite         	(w_MemWrite        ),
     .ALU_Result       	(ALU_Result        ),
     .ReadData2_ex_mem 	(ReadData2_ex_mem  ),
-    .MemRead          	(IE_Mem[1]         ),
-    .muxOut_5bit      	(muxOut_5bit       ),
+    .MemRead          	(w_MemRead         ),
+    .M_muxOut_5bit      (muxOut_5bit       ),
     .clk              	(clk               ),
     .rst              	(rst               ),
 // Outputs - - - - - - - - - - - - -
-    .RegWrite         	(RegWrite          ),
+    .M_RegWrite         (M_RegWrite          ),
     .MemtoReg         	(MemtoReg          ),
     .ReadData         	(ReadData          ),
     .Mem_ALU_Result   	(Mem_ALU_Result    ),
-    .MemWriteReg      	(MemWriteReg       ),
+    .M_MemWriteReg      (M_MemWriteReg       ),
     .PCSrc            	(PCSrc             )
 );
 
 //  - - - - - -  Instruction Write Back
 Instr_WB u_Instr_WB(
-    .MemtoReg      (MemtoReg),
-    .ReadData      (ReadData),
-    .Mem_ALU_Result(Mem_ALU_Result),
-    .WriteData     (WriteData)
+    .MemtoReg       (MemtoReg),
+    .ReadData       (ReadData),
+    .M_RegWrite     (M_RegWrite),
+    .M_MemWriteReg  (M_MemWriteReg),
+    .Mem_ALU_Result (Mem_ALU_Result),
+    .WriteData      (WriteData),
+    .RegWrite       (RegWrite),
+    .MemWriteReg    (MemWriteReg)
 );
     
 endmodule

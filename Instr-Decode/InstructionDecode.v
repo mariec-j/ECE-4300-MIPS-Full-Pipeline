@@ -25,6 +25,8 @@ wire [2:0] control_M;
 wire ALUSrc, RegDst;
 
 Control c0(
+    .clk(clk),
+    .rst(rst),
     .controlInput(IFID_instruction[31:26]), //opcode
     .control_WB(control_WB), .control_ALUOp(control_ALUOp),
     .control_M(control_M),
@@ -39,10 +41,13 @@ SignExtend se0(
 );
 
 wire [31:0] RegFile_readData1, RegFile_readData2;
+wire [4:0] regAddr1, regAddr2;
+assign regAddr1 = IFID_instruction[25:21];
+assign regAddr2 = IFID_instruction[20:16];
 
 RegisterFile rf0(
-    .readReg1(IFID_instruction[25:21]), 
-    .readReg2(IFID_instruction[20:16]), 
+    .readReg1(regAddr1), 
+    .readReg2(regAddr2), 
     .writeReg(MemWBLatch_WriteReg),
     .writeData(WBMux_WriteData),
     .RegWrite(RegWrite), 

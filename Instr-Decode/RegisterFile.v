@@ -19,7 +19,7 @@ initial begin
         gen_purpose_reg[j] = 32'h00000000;
 end
 
-always @(posedge clk or negedge rst) begin
+always @(*) begin
     if(!rst) begin 
         RegFile_readData1 <= 0;
         RegFile_readData2 <= 0;
