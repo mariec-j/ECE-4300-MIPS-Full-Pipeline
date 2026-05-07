@@ -21,11 +21,12 @@ Connect all the stages and complete the full MIPS Pipeline, which includes:
 - Timing Diagrams Screenshots
 
 ## Timing Diagram Screenshot
-\- \- \- \- \- Successful Testbench Images Organized by Instruction Stages \- \- \- \- \- 
+
+### **\- \- \- \- \- Successful Testbench Images Organized by Instruction Stages \- \- \- \- \-**
 
 **General Register**
 
-![Image](<TestBenchFiles/Waveform Images/TB-2 (Successful)/01-General-Purpose-Registers.png>)
+![Image](<TestBenchFiles/Waveform Images/TB-2 (Successful)/01-General-Purpose-Regs.png>)
 
 **Instruction Fetch**
 
@@ -45,8 +46,11 @@ Connect all the stages and complete the full MIPS Pipeline, which includes:
 
 ![Image](<TestBenchFiles/Waveform Images/TB-2 (Successful)/06-WriteBack.png>)
 
+### **\- \- \- \- \- Images on No Forwarding vs Forwarding Optimization \- \- \- \- \-**
 
-**\- \- \- \- \- The following are testbench images of a failed test bench \- \- \- \- \-**
+![Image](<TestBenchFiles/Waveform Images/TB-3 (Forwarding Test)/with_vs_wo_Forwarding.png>)
+
+### **\- \- \- \- \- The following are testbench images of a failed test bench \- \- \- \- \-**
 
 ![Image](https://github.com/mariec-j/ECE-4300-MIPS-Full-Pipeline/blob/main/TestBenchFiles/Waveform%20Images/TB-1/Screenshot%202026-04-30%20063401.png)
 
