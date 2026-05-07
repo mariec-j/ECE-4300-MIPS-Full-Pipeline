@@ -23,7 +23,11 @@ module EX_Mem_Latch(
     );
 
     always @(posedge clk or negedge rst)begin
+<<<<<<< HEAD
        // #1
+=======
+        #1
+>>>>>>> parent of b47b70e (Wrapping up in testbenching)
         if(!rst)begin
             //outputs
             EX_Mem_Latch_WB <= 2'b0;
