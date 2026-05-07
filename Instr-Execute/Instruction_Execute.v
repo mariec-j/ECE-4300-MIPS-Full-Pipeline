@@ -16,14 +16,6 @@ module Instruction_Execute(
     input [2:0]     Mem,
     input           clk,
     input           rst,
-/////////////////// NEW INPUTS
-input [4:0]     Rs,
-input [4:0]     EX_MEM_Rd,
-input [4:0]     MEM_WB_Rd,
-input           EX_MEM_RegWrite,
-input           MEM_WB_RegWrite,
-input [31:0]    EX_MEM_value,
-input [31:0]    MEM_WB_value,
 // - - - - - - outputs - - - - - -
     output [1:0]    IE_WB,
     output [2:0]    IE_Mem,
@@ -41,11 +33,14 @@ wire [31:0] ALU_out; // 32 bit output of alue
 wire [2:0] ALU_control_out;//output of ALU control
 wire [4:0] mux_5_out;//output of second mux
 wire ALU_Zero_out;
+<<<<<<< HEAD
 /////////////////////////////////////////////////////
 wire [1:0] ForwardA;
 wire [1:0] ForwardB;
 wire [31:0] muxA_out;  
 wire [31:0] muxB_out;
+=======
+>>>>>>> parent of 337a16f (Merge branch 'main' of https://github.com/mariec-j/ECE-4300-MIPS-Full-Pipeline)
 
 
 //Adder
@@ -64,7 +59,7 @@ ALU_Control ALU_control01(
 
 //ALU
 ALU ALU01 (
-    .ReadData1(muxA_out), //a
+    .ReadData1(ReadData1), //a
     .Data2(mux_32_out), //b
     .control(ALU_control_out), 
     .ALU_Result(ALU_out),
@@ -74,7 +69,7 @@ ALU ALU01 (
 //Mux_32bit
 mux #(.WIDTH_inp(32)) mux_32bit (
     .sel(ALU_Src),
-    .in_1(muxB_out),
+    .in_1(ReadData2),
     .in_2(SignExtend),
     .outp(mux_32_out)
 );
@@ -110,31 +105,5 @@ EX_Mem_Latch EX_M_Latch (
     .EX_Mem_Latch_muxOut_5bit(muxOut_5bit)
 );
 
-//Forwarding.v 
 
-Forwarding u_Forwarding(
-    .ID_EX_Rs          (Rs              ),
-    .ID_EX_Rt          (Instr_2016      ),
-    .EX_MEM_RegisterRd (EX_MEM_Rd       ),
-    .MEM_WB_RegisterRd (MEM_WB_Rd       ),
-    .EX_MEM_RegWrite   (EX_MEM_RegWrite ),
-    .MEM_WB_RegWrite   (MEM_WB_RegWrite ),
-    .ForwardA          (ForwardA        ),
-    .ForwardB          (ForwardB        )
-);
-Forwardingmux #(.WIDTH_inp_forward(32)) muxA (
-    .sel_forward  (ForwardA),
-    .in_1_forward (ReadData1),
-    .in_2_forward (MEM_WB_value),
-    .in_3_forward (EX_MEM_value),
-    .outp_forward (muxA_out)
-);
-
-Forwardingmux #(.WIDTH_inp_forward(32)) muxB (
-    .sel_forward  (ForwardB),
-    .in_1_forward (ReadData2),
-    .in_2_forward (MEM_WB_value),
-    .in_3_forward (EX_MEM_value),
-    .outp_forward (muxB_out)
-);
 endmodule
