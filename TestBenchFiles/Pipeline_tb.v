@@ -19,7 +19,7 @@ module Pipeline_tb();
         rst = 0;
         #10 rst = 1;
 
-        #500 $finish;
+       #300 $finish;
     end
     
     initial begin

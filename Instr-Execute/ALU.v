@@ -15,7 +15,7 @@ parameter ALUand = 3'b000;
 parameter ALUor = 3'b001;
 parameter ALUslt = 3'b111;
 
-always@* begin
+always@(*) begin
     case(control)
         ALUadd: result = ReadData1 + Data2;
         ALUsub: result = ReadData1 - Data2;
