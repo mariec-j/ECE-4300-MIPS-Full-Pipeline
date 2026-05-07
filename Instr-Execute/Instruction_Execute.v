@@ -33,14 +33,11 @@ wire [31:0] ALU_out; // 32 bit output of alue
 wire [2:0] ALU_control_out;//output of ALU control
 wire [4:0] mux_5_out;//output of second mux
 wire ALU_Zero_out;
-<<<<<<< HEAD
 /////////////////////////////////////////////////////
 wire [1:0] ForwardA;
 wire [1:0] ForwardB;
 wire [31:0] muxA_out;  
 wire [31:0] muxB_out;
-=======
->>>>>>> parent of 337a16f (Merge branch 'main' of https://github.com/mariec-j/ECE-4300-MIPS-Full-Pipeline)
 
 
 //Adder
